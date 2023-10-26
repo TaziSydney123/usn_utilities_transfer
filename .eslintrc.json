@@ -1,0 +1,19 @@
+{
+    "env": {
+        "commonjs": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": "xo",
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+      "indent": ["error", 2],
+      "object-curly-spacing": ["error", "always"],
+      "no-trailing-spaces": ["error", { "skipBlankLines": true }],
+      "comma-dangle": ["error", "never"],
+      "quotes": ["error", "double"],
+      "eol-last": ["error", "never"]
+    }
+}
