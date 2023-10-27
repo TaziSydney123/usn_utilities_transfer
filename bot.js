@@ -283,7 +283,6 @@ ${error.stack}
 
 function loginBot() {
   logger.info("-------------------Logging in-------------------");
-  console.log(parsed.TOKEN);
   client.login(parsed.TOKEN);
   voyageHostingChecker.startVoyageHostingChecker(client);
 }
