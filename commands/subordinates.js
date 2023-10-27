@@ -82,7 +82,7 @@ module.exports = {
     if (helpers.memberHasRole(interaction.member, juniorEnlistedRoleId)) {
       await interaction.reply({
         content: "You are not authorized to use this command",
-        ephemeral: true,
+        ephemeral: true
       });
       return;
     }

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits, userMention } = require("discord.js");
+const { SlashCommandBuilder, userMention } = require("discord.js");
 
 const { underscore, bold } = require("discord.js");
 
@@ -12,17 +12,19 @@ const checkSquadsCommand = new SlashCommandBuilder()
       .setName("ship")
       .setDescription("The ship to check - leave blank for any ship or no ship")
       .setRequired(false)
-      .setAutocomplete(true))
+      .setAutocomplete(true));
 
 module.exports = {
   commandInterface: checkSquadsCommand,
   async execute(interaction) {
     await interaction.deferReply({ ephemeral: true });
 
+    const { juniorEnlistedRoleId } = interaction.client.settings.get(interaction.guild.id);
+
     if (helpers.memberHasRole(interaction.member, juniorEnlistedRoleId)) {
-      await interaction.reply({
+      await interaction.followUp({
         content: "You are not authorized to use this command",
-        ephemeral: true,
+        ephemeral: true
       });
       return;
     }
