@@ -139,7 +139,9 @@ module.exports = {
             return;
           }
 
-          if (interaction.options.getMentionable("target").members.size >= MAX_MEMBERS_BEFORE_NCO && !interaction.member.permissions.has(PermissionFlagsBits.CreatePrivateThreads)) {
+          const { juniorEnlistedRoleId } = interaction.client.settings.get(interaction.guild.id);
+
+          if (interaction.options.getMentionable("target").members.size >= MAX_MEMBERS_BEFORE_NCO && helpers.memberHasRole(interaction.member, juniorEnlistedRoleId)) {
             interaction.followUp("You do not have permission to run this commnd for more than " + MAX_MEMBERS_BEFORE_NCO + " members");
             return;
           }

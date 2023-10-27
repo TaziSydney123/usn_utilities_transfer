@@ -13,12 +13,20 @@ const checkSquadsCommand = new SlashCommandBuilder()
       .setDescription("The ship to check - leave blank for any ship or no ship")
       .setRequired(false)
       .setAutocomplete(true))
-  .setDefaultMemberPermissions(PermissionFlagsBits.CreatePrivateThreads);
 
 module.exports = {
   commandInterface: checkSquadsCommand,
   async execute(interaction) {
     await interaction.deferReply({ ephemeral: true });
+
+    if (helpers.memberHasRole(interaction.member, juniorEnlistedRoleId)) {
+      await interaction.reply({
+        content: "You are not authorized to use this command",
+        ephemeral: true,
+      });
+      return;
+    }
+    
     if (interaction.options.getString("ship")) {
       if (!helpers.roleExists(interaction, interaction.options.getString("ship"))) {
         interaction.followUp({ ephemeral: true, content: "Could not find a ship with that name" });

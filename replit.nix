@@ -1,5 +1,6 @@
 { pkgs }: {
   deps = [
+    pkgs.systemd
         pkgs.busybox
         pkgs.less
         pkgs.nodejs-18_x
