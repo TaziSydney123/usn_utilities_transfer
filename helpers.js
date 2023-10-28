@@ -86,8 +86,12 @@ async function getChannel(guild, name) {
 }
 
 async function getChannelById(guild, channelId) {
+  console.log("Looking for channel in guild " + guild.id + " with channelId" + channelId);
   if (isSnowflake(channelId)) {
     return guild.channels.fetch(channelId);
+  } else {
+    console.log("Channel not snowflake in guild " + guild.id + " with channelId" + channelId);
+    return null;
   }
 }
 
