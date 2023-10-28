@@ -116,7 +116,7 @@ client.officialVoyageCountCache = new Enmap({
 
 const commands = [];
 
-const approvedGuilds = ["933907909954371654"];
+const approvedGuilds = JSON.parse(parsed.APPROVED_GUILDS);
 
 client.on(Events.ClientReady, async client => {
   logger.info(`Logged in as "${client.user.tag}"`);
@@ -167,20 +167,29 @@ client.on(Events.ClientReady, async client => {
 
 async function setupGuilds(client) {
   const guilds = await client.guilds.fetch();
-  let completedGuilds = 0;
   
   logger.info("-------------------Setting Up Guilds-------------------");
   
-  guilds.forEach(async partialGuild => {
-    if (approvedGuilds.includes((await partialGuild.fetch()).id)) {
-      logger.info("Caching Voyages for guild " + (await partialGuild.fetch()).id);
-      await helpers.cacheAllOfficialVoyageCounts(await helpers.getChannelById(await partialGuild.fetch(), client.settings.get((await partialGuild.fetch()).id, "voyageLogbookChannelId")));
-      completedGuilds += 1;
-      if (completedGuilds === guilds.size) {
-        logger.info("Guild Setup Complete");
-      }
-    }
+  let guildPromises = [];
+
+  guilds.forEach(partialGuild => {
+    guildPromises.push(partialGuild.fetch());
   });
+
+  guildPromises = await Promise.all(guildPromises);
+  
+  guildPromises = guildPromises.filter(guild => approvedGuilds.includes(guild.id));
+  
+  let completedGuilds = 0;
+  
+  for (const guild of guildPromises) {
+    logger.info("Caching Voyages for Guild ID " + guild.id);
+    await helpers.cacheAllOfficialVoyageCounts(await helpers.getChannelById(guild, client.settings.get(guild.id, "voyageLogbookChannelId")));
+    completedGuilds += 1;
+    if (completedGuilds === guildPromises.length) {
+      logger.info("Guild Setup Complete");
+    }
+  }
 }
 
 client.on(Events.GuildMemberRemove, async member => {
