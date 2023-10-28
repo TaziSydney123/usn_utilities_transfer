@@ -116,7 +116,7 @@ client.officialVoyageCountCache = new Enmap({
 
 const commands = [];
 
-const approvedGuilds = ["1053461563878682796" /* internal bot testing */, "1127337318857060394" /* USN Utils bot testing */, "933907909954371654"];
+const approvedGuilds = ["933907909954371654"];
 
 client.on(Events.ClientReady, async client => {
   logger.info(`Logged in as "${client.user.tag}"`);
