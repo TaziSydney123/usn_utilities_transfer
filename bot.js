@@ -174,7 +174,6 @@ async function setupGuilds(client) {
   guilds.forEach(async partialGuild => {
     if (approvedGuilds.includes((await partialGuild.fetch()).id)) {
       logger.info("Caching Voyages for guild " + (await partialGuild.fetch()).id);
-      logger.info(client.settings.get((await partialGuild.fetch()).id));
       await helpers.cacheAllOfficialVoyageCounts(await helpers.getChannelById(await partialGuild.fetch(), client.settings.get((await partialGuild.fetch()).id, "voyageLogbookChannelId")));
       completedGuilds += 1;
       if (completedGuilds === guilds.size) {
@@ -260,9 +259,6 @@ client.on(Events.MessageCreate, async message => {
       return;
     }
     
-    console.log(message.guild.id);
-    console.log(client.settings.get(message.guild.id, "voyageLogbookChannelId"));
-
     if (await helpers.getChannelById(message.guild, client.settings.get(message.guild.id, "voyageLogbookChannelId"))) {
       if (message.channel.id === (client.settings.get(message.guild.id, "voyageLogbookChannelId"))) {
         await helpers.cacheAllOfficialVoyageCounts(await helpers.getChannelById(message.guild, client.settings.get(message.guild.id, "voyageLogbookChannelId")));
