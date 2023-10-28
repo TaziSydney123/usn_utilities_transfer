@@ -34,7 +34,7 @@ async function execute(client, subordinateDatabase, member) {
   if (alertChannel && (clearedSubordinates.length > 0 || actingFor)) {
     await alertChannel.send(
       `-------------------------\n${userMention(member.id)} **has left the server!**
-  ${(superior ? "CO: " + userMention(superior) + "\n" : "")}${((actingFor && actingFor !== superior) ? "Acting For: " + userMention(actingFor) : "")}${(clearedSubordinates.length > 0 ? "**Subordinate List:**\n" + clearedSubordinatesDisplay.join("\n") : "")}`
+  ${(superior ? "Next in Command: " + userMention(superior) + "\n" : "")}${((actingFor && actingFor !== superior) ? "Acting in Place For: " + userMention(actingFor) : "")}${(clearedSubordinates.length > 0 ? "**Subordinate List:**\n" + clearedSubordinatesDisplay.join("\n") : "")}`
     );
   }
 }

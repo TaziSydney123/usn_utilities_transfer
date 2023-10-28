@@ -43,16 +43,7 @@ async function execute(interaction) {
         .setMaxLength(MAX_INPUT_LENGTH)
         .setMinLength(MIN_INPUT_LENGTH);
 
-      const requestingVoyageChannelValue = interaction.client.settings.get(interaction.guild.id, "requestingVoyageChannel");
-      const requestingVoyageChannelInput = new TextInputBuilder()
-        .setCustomId("requestingVoyageChannel")
-        .setLabel("The channel with sailors requesting to sail")
-        .setStyle(TextInputStyle.Short)
-        .setValue(requestingVoyageChannelValue.length >= MIN_INPUT_LENGTH ? requestingVoyageChannelValue : "No valid ID found!")
-        .setMaxLength(MAX_INPUT_LENGTH)
-        .setMinLength(MIN_INPUT_LENGTH);
-
-      const inputs = [logbookChannelInput, botWarningChannelInput, requestingVoyageChannelInput];
+      const inputs = [logbookChannelInput, botWarningChannelInput];
 
       const actionRows = inputs.map(input => new ActionRowBuilder().addComponents(input));
 
