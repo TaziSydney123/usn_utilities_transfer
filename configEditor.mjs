@@ -39,7 +39,7 @@ function askEnmap(guildId) {
       {
         type: 'confirm',
         name: 'edit',
-        message: "Edit this?",
+        message: "Edit this? (" + settings.get(guildId, path) + ")",
       },
     ]).then(input => {
       if (input.edit) {

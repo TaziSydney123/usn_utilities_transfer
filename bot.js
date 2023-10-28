@@ -172,11 +172,13 @@ async function setupGuilds(client) {
   logger.info("-------------------Setting Up Guilds-------------------");
   
   guilds.forEach(async partialGuild => {
-    logger.info("Caching Voyages");
-    await helpers.cacheAllOfficialVoyageCounts(await helpers.getChannelById(await partialGuild.fetch(), client.settings.get(await partialGuild.fetch().id, "voyageLogbookChannelId")));
-    completedGuilds += 1;
-    if (completedGuilds === guilds.size) {
-      logger.info("Guild Setup Complete");
+    if (approvedGuilds.includes((await partialGuild.fetch()).id)) {
+      logger.info("Caching Voyages for guild " + (await partialGuild.fetch()).id);
+      await helpers.cacheAllOfficialVoyageCounts(await helpers.getChannelById(await partialGuild.fetch(), client.settings.get((await partialGuild.fetch()).id, "voyageLogbookChannelId")));
+      completedGuilds += 1;
+      if (completedGuilds === guilds.size) {
+        logger.info("Guild Setup Complete");
+      }
     }
   });
 }
@@ -256,7 +258,7 @@ client.on(Events.MessageCreate, async message => {
     if (!approvedGuilds.some(guildId => guildId === message.guildId)) {
       return;
     }
-
+    
     if (await helpers.getChannelById(message.guild, client.settings.get(message.guild.id, "voyageLogbookChannelId"))) {
       if (message.channel.id === (client.settings.get(message.guild.id, "voyageLogbookChannelId"))) {
         await helpers.cacheAllOfficialVoyageCounts(await helpers.getChannelById(message.guild, client.settings.get(message.guild.id, "voyageLogbookChannelId")));
