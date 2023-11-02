@@ -77,7 +77,7 @@ async function getMemberReportEmbed(member, interaction, multipleIndex = null, m
     { name: "Weekly Ofcl. Voyages", value: voyageStats.weeklyOfficials.toString(), inline: true },
     { name: "Total Ofcl. Voyages", value: voyageStats.totalOfficials.toString(), inline: true }
   ]);
-  if (helpers.memberHasRole(member, interaction.client.settings.get(interaction.guild.id, "voyagePermissionsRole"))) {
+  if (helpers.memberHasRole(member, interaction.client.settings.get(interaction.guild.id, "voyagePermissionsRoleId"))) {
     fields.push(
       { name: "Last Ofcl. Voyage Hosted", value: lastVoyageLed, inline: true },
       { name: "Weekly Ofcl. Voyages Hosted", value: voyageStats.weeklyOfficialsLed.toString(), inline: true },
