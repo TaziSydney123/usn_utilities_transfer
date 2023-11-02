@@ -16,7 +16,7 @@ function startVoyageHostingChecker(client) {
   job.start();
 }
 
-const USN_OF_SOT_SERVER_ID = "1053461563878682796"; // Testing id, TODO during production: replace with real id
+const USN_OF_SOT_SERVER_ID = "933907909954371654";
 
 const DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
 
