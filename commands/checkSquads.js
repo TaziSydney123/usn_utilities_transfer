@@ -7,7 +7,7 @@ const helpers = require("../helpers");
 const checkSquadsCommand = new SlashCommandBuilder()
   .setName("check_squads")
   .setDescription("Checks that all JE are in a squad")
-  .setDefaultMemberPermissions(PermissionFlagsBits.TimeoutMembers)
+  .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
   .addStringOption(option =>
     option
       .setName("ship")
