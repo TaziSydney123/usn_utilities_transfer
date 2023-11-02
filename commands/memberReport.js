@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, userMention } = require("discord.js");
+const { SlashCommandBuilder, PermissionFlagsBits, userMention } = require("discord.js");
 
 const { EmbedBuilder } = require("discord.js");
 
@@ -141,7 +141,7 @@ module.exports = {
 
           const { juniorEnlistedRoleId } = interaction.client.settings.get(interaction.guild.id);
 
-          if (interaction.options.getMentionable("target").members.size >= MAX_MEMBERS_BEFORE_NCO && helpers.memberHasRole(interaction.member, juniorEnlistedRoleId)) {
+          if (interaction.options.getMentionable("target").members.size >= MAX_MEMBERS_BEFORE_NCO && !interaction.member.permissions.has(PermissionFlagsBits.TimeoutMembers)) {
             interaction.followUp("You do not have permission to run this commnd for more than " + MAX_MEMBERS_BEFORE_NCO + " members");
             return;
           }

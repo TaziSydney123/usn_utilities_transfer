@@ -27,7 +27,7 @@ async function execute(interaction) {
 
       const logbookChannelValue = interaction.client.settings.get(interaction.guild.id, "voyageLogbookChannelId");
       const logbookChannelInput = new TextInputBuilder()
-        .setCustomId("voyageLogbookChannelInput")
+        .setCustomId("voyageLogbookChannelIdInput")
         .setLabel("The voyage logbook channel ID")
         .setStyle(TextInputStyle.Short)
         .setValue(logbookChannelValue.length >= MIN_INPUT_LENGTH ? logbookChannelValue : "No valid ID found!")

@@ -21,6 +21,7 @@ const getSubordinatesReclaimMessage = (personal = true, setActing = false) => se
 const subordinatesCommand = new SlashCommandBuilder()
   .setName("subordinates")
   .setDescription("Configure your or someone else's subordinates")
+  .setDefaultMemberPermissions(PermissionFlagsBits.TimeoutMembers)
   .addSubcommand(subcommand =>
     subcommand
       .setName("set")
@@ -76,16 +77,6 @@ module.exports = {
   commandInterface: subordinatesCommand,
   async execute(interaction) {
     const subordinateDB = new SubordinatesDatabase(interaction);
-
-    const { juniorEnlistedRoleId } = interaction.client.settings.get(interaction.guild.id);
-
-    if (helpers.memberHasRole(interaction.member, juniorEnlistedRoleId)) {
-      await interaction.reply({
-        content: "You are not authorized to use this command",
-        ephemeral: true
-      });
-      return;
-    }
     
     if (interaction.options.getSubcommand() === "set") {
       const actingSuperior = subordinateDB.getActingFor(interaction.member.id);
