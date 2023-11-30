@@ -155,8 +155,9 @@ module.exports = {
       } else {
         members.push(interaction.member);
       }
-    } catch {
+    } catch (e) {
       interaction.followUp(interaction.options.getMentionable("target") + " does not exist in the server");
+      console.error(e);
       return;
     }
 
@@ -167,7 +168,7 @@ module.exports = {
     Promise.all(embedPromises)
       .then(embeds => {
         const followUpPromises = embeds.map(embed => interaction.followUp({ embeds: [embed] }));
-  
+      
         return Promise.all(followUpPromises);
       });
   }
